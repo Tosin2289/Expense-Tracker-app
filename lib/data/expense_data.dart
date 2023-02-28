@@ -59,7 +59,7 @@ class ExpenseData extends ChangeNotifier {
         startOfTheWeek = today.subtract(Duration(days: i));
       }
     }
-    notifyListeners();
+
     return startOfTheWeek!;
   }
 
