@@ -28,9 +28,12 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   TextField(
                     controller: newExpenseNameContoller,
+                    decoration: InputDecoration(hintText: 'Expense Name'),
                   ),
                   TextField(
                     controller: newExpenseAmountContoller,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(hintText: 'Expense Amount'),
                   ),
                 ],
               ),
@@ -82,11 +85,15 @@ class _HomePageState extends State<HomePage> {
         builder: (context, value, child) => Scaffold(
             backgroundColor: Colors.grey[300],
             floatingActionButton: FloatingActionButton(
+              backgroundColor: Colors.black,
               onPressed: addNewExpense,
               child: Icon((Icons.add)),
             ),
             body: ListView(
               children: [
+                SizedBox(
+                  height: 10,
+                ),
                 //weekly summary
                 ExpenseSummary(startOfWeek: value.startOfTheWeek()),
                 //Expense list

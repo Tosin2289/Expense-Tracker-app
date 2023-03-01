@@ -55,7 +55,7 @@ class ExpenseData extends ChangeNotifier {
     DateTime today = DateTime.now();
     //go backwards from today to find sunday
     for (int i = 0; i < 7; i++) {
-      if (getDayName(today.subtract(Duration(days: i))) == 'sun') {
+      if (getDayName(today.subtract(Duration(days: i))) == 'Sun') {
         startOfTheWeek = today.subtract(Duration(days: i));
       }
     }
