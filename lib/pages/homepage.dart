@@ -16,6 +16,12 @@ class _HomePageState extends State<HomePage> {
   //text controllers
   final newExpenseNameContoller = TextEditingController();
   final newExpenseAmountContoller = TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+    Provider.of<ExpenseData>(context, listen: false).prepareData();
+  }
+
   //add new expense
   void addNewExpense() {
     showDialog(
@@ -53,16 +59,25 @@ class _HomePageState extends State<HomePage> {
             ));
   }
 
+//delete expense
+  void deleteExpense(ExpenseItem expense) {
+    Provider.of<ExpenseData>(context, listen: false).deleteExpense(expense);
+  }
+
 //save
   void save() {
     //create Expense item
-    ExpenseItem newExpense = ExpenseItem(
-      name: newExpenseNameContoller.text,
-      amount: newExpenseAmountContoller.text,
-      dateTime: DateTime.now(),
-    );
+    if (newExpenseAmountContoller.text.isNotEmpty &&
+        newExpenseNameContoller.text.isNotEmpty) {
+      ExpenseItem newExpense = ExpenseItem(
+        name: newExpenseNameContoller.text,
+        amount: newExpenseAmountContoller.text,
+        dateTime: DateTime.now(),
+      );
 //add new Expense
-    Provider.of<ExpenseData>(context, listen: false).addNewExpense(newExpense);
+      Provider.of<ExpenseData>(context, listen: false)
+          .addNewExpense(newExpense);
+    }
     Navigator.pop(context);
     clear();
   }
@@ -96,12 +111,17 @@ class _HomePageState extends State<HomePage> {
                 ),
                 //weekly summary
                 ExpenseSummary(startOfWeek: value.startOfTheWeek()),
+                SizedBox(
+                  height: 20,
+                ),
                 //Expense list
                 ListView.builder(
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
                   itemCount: value.getAllExpenseList().length,
                   itemBuilder: ((context, index) => ExpenseTile(
+                      deleteTapped: (p0) =>
+                          deleteExpense(value.getAllExpenseList()[index]),
                       name: value.getAllExpenseList()[index].name,
                       amount: value.getAllExpenseList()[index].amount,
                       date: value.getAllExpenseList()[index].dateTime)),
