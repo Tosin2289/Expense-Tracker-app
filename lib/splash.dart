@@ -17,7 +17,7 @@ class _SplashState extends State<Splash> {
   }
 
   navigatetohome() async {
-    await Future.delayed(Duration(milliseconds: 2000), (() {}));
+    await Future.delayed(Duration(milliseconds: 5000), (() {}));
     Navigator.pushReplacement(context, MaterialPageRoute(builder: ((context) {
       return HomePage();
     })));
@@ -29,15 +29,36 @@ class _SplashState extends State<Splash> {
       backgroundColor: Colors.white,
       body: Center(
           child: Padding(
-        padding: const EdgeInsets.all(25.0),
+        padding: const EdgeInsets.all(15.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            SizedBox(),
-            Lottie.asset(
-              'assets/splash.json',
-              fit: BoxFit.cover,
+            Column(
+              children: [
+                SizedBox(
+                  height: 50,
+                ),
+                Lottie.asset(
+                  'assets/splash.json',
+                  fit: BoxFit.cover,
+                ),
+                ShaderMask(
+                  shaderCallback: (bounds) =>
+                      const LinearGradient(colors: [Colors.red, Colors.yellow])
+                          .createShader(
+                    Rect.fromLTWH(0, 0, bounds.width, bounds.height),
+                  ),
+                  child: Text(
+                    "YELLA",
+                    style: TextStyle(
+                        fontSize: 28,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ],
             ),
+            Spacer(),
             ShaderMask(
               shaderCallback: (bounds) =>
                   const LinearGradient(colors: [Colors.red, Colors.blue])
@@ -47,7 +68,7 @@ class _SplashState extends State<Splash> {
               child: Text(
                 "Made By Phenomes",
                 style: TextStyle(
-                    fontSize: 28,
+                    fontSize: 16,
                     color: Colors.white,
                     fontWeight: FontWeight.bold),
               ),
